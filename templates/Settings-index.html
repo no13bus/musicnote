@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<include file="Index:header" />
+<body padding-top: 60px; background="__PUBLIC__/images/wallpaper.png";>
+    <include file="Index:navibar" />
+
+    <div class="container-fluid container mt15">
+        <div class="row-fluid">
+        <div class="span9 left">
+            <div class="container-box">
+                <form class="form-horizontal" action='{:U('Index/Settings/index')}' method="POST">
+                    <fieldset>
+                        <div id="legend">
+                            <legend class="">用户信息设置</legend>
+                        </div>
+                        <if condition="!empty($errormsg)" >
+                            <ul class="errors alert alert-error">
+                                    <li>{$errormsg}</li>
+                            </ul>
+                        </if>
+                        <div class="control-group">
+                            <!-- Avatar -->
+                            <label class="control-label" for="username">头像</label>
+                            <div class="controls">
+                                <img src="__ROOT__/Uploads/avatar/b_<empty name="user_info['avatar']">default.png<else />{$user_info.avatar}</empty>" alt="" class="avatar" />
+                                <img src="__ROOT__/Uploads/avatar/m_<empty name="user_info['avatar']">default.png<else />{$user_info.avatar}</empty>" alt="" class="avatar" />
+                                <img src="__ROOT__/Uploads/avatar/s_<empty name="user_info['avatar']">default.png<else />{$user_info.avatar}</empty>" alt="" class="avatar" />
+                                <a href="{:U('Index/Settings/avatar')}" class="btn btn-block set-avatar-btn">设置头像</a>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <!-- Username -->
+                            <label class="control-label" for="username">用户名</label>
+                            <div class="controls">
+                                <input type="text" id="username" name="username" placeholder="" class="input-xlarge" value="{$user_info.username}" readonly>
+                                <p class="help-block">用户名由字母开头，只能含有字母、数字或者下划线</p>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <!-- E-mail -->
+                            <label class="control-label" for="email">E-mail</label>
+                            <div class="controls">
+                                <input type="text" id="email" name="email" placeholder="" class="input-xlarge" value="{$user_info.email}" readonly>
+                                <p class="help-block">您的E-mail，便于登录和找回密码</p>
+                            </div>
+                        </div>
+           
+                        <div class="control-group">
+                            <!-- E-mail -->
+                            <label class="control-label" for="signature">个性签名</label>
+                            <div class="controls">
+                                <input type="text" id="signature" name="signature" placeholder="" class="input-xlarge" value="{$user_info.signature}">
+                                <p class="help-block">您的签名，将展示在您的个人资料页面</p>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <!-- Location -->
+                            <label class="control-label" for="location">城市</label>
+                            <div class="controls">
+                                <input type="text" id="location" name="location" placeholder="" class="input-xlarge" value="{$user_info.location}">
+                                <p class="help-block">您的城市，有助于后续您在社区的交友</p>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <!-- E-mail -->
+                            <label class="control-label" for="website">个人网站</label>
+                            <div class="controls">
+                                <input type="text" id="website" name="website" placeholder="" class="input-xlarge" value="{$user_info.website}">
+                                <p class="help-block">您的个人网站，让您的朋友了解您更多一点</p>
+                            </div>
+                        </div>
+            
+                        <div class="control-group">
+                            <!-- E-mail -->
+                            <label class="control-label" for="douban">豆瓣用户名：</label>
+                            <div class="controls">
+                                <input type="text" id="douban" name="douban" placeholder="" class="input-xlarge" value="{$user_info.douban}">
+                                <p class="help-block">您的豆瓣用户名，用以在您的个人页面展示您正在读的书。</p>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <!-- E-mail -->
+                            <label class="control-label" for="self_intro">个人简介：</label>
+                            <div class="controls">
+                                <textarea type="text" id="self_intro" name="self_intro" placeholder="" class="input-xlarge">{$user_info.self_intro}</textarea>
+                                <p class="help-block">可以稍微详细的介绍自己。</p>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <!-- Button -->
+                            <div class="controls">
+                                <button class="btn btn-success">保存改动</button>
+                                <a href="{:U('Index/Settings/setpwd')}" class="ml10 btn">设置密码</a>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <!-- {{ xsrf_form_html() }} -->
+                </form>
+            </div>
+
+
+        </div>
+
+        <div class="span3 right">
+            <div class="sidenav container-box">
+                <ul>
+                    <li class="current">
+                        <a href="{:U('Index/Settings/index')}">用户中心</a>
+                    </li>
+                    <li>
+                        <a href="{:U('Index/Settings/avatar')}">设置头像</a>
+                    </li>
+                    <li>
+                        <a href="{:U('Index/Settings/setpwd')}">设置密码</a>
+                    </li>
+                    <li>
+                        <a href="__APP__">返回首页</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    </div>
+    <include file="Index:footer" />
+</body>
+</html>

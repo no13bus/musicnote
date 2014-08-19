@@ -1,0 +1,40 @@
+<head>
+    <meta charset="UTF-8">
+    <title>MusicNote</title>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/base/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/base/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/base/in-min.js"></script>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/main.css" />
+    
+    <link rel="icon" href="{{ STATIC_URL }}favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="{{ STATIC_URL }}favicon.ico" type="image/x-icon" />
+    
+    <script type="text/javascript" src="{{ STATIC_URL }}js/base/jquery.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/widget/bootstrap-typeahead.js"></script>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            $('.J_search').submit(function(e) {
+                var _node = $(this);
+                var query = _node.find('input').val();
+                e.preventDefault();
+                window.open('http://www.google.com.hk/search?q=site:3n1b.com/t%20' + query, "_blank");
+            });
+        });
+    </script>
+    
+    <script type="text/javascript">
+
+  // var _gaq = _gaq || [];
+  // _gaq.push(['_setAccount', 'UA-37976592-1']);
+  // _gaq.push(['_trackPageview']);
+
+  // (function() {
+  //   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  //   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  //   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  // })();
+
+    </script>
+</head>

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+    {% block content %}
+<div class="container-fluid container mt15">
+        <div class="row-fluid">
+        <div class="span9 left">
+                <div class="topics container-box node-topics">
+
+    <div class="ui-header">
+        <span class="bread-nav"><a href="{% url 'index' %}">叁年壹班</a> › {{ member.username }} › 话题列表</span>
+    </div>
+
+    <div class="ui-content">
+{% for topic in topics %}
+        <div class="topic-item">
+            <a href="{% url 'member_info' topic.author.username %}">
+                <img src="{% if topic.author.userprofile.avatar %}{{ STATIC_URL }}avatar/m_{{ topic.author.userprofile.avatar }}.png{% else %}{{ STATIC_URL }}avatar/m_default.png{% endif %}" alt="" class="avatar" />
+            </a>
+            <div class="main">
+                <h3 class="title">
+                    <a href="{% url 'topicview' topic.id %}#reply{{ topic.reply_count }}">{{ topic.title }}</a>
+                </h3>
+                <div class="meta">
+                    <span class="node">
+                        <a href="{% url 'nodetopics' topic.node.slug %}">{{ topic.node.name }}</a>
+                    </span>
+                    •
+                    <span class="username">
+                        <a href="{% url 'member_info' topic.author.username %}">{{ topic.author.username }}</a>
+                    </span>
+                    • 
+                    {% if topic.last_replied_time %}
+                    <span class="last-touched">{{ topic.last_touched }}</span>
+                    •
+                    <span class="last-reply-username">
+                        最后回复来自
+                        <a href="{% url 'member_info' topic.last_replied_by.username %}"> <strong>{{ topic.last_replied_by.username }}</strong>
+                        </a>
+                    </span>
+                    {% else %}
+                    <span class="last-touched">{{ topic.last_touched }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            {% if topic.reply_count %}
+            <div class="count">
+                <a href="{% url 'topicview' topic.id %}#reply{{ topic.reply_count }}">{{ topic.reply_count }}</a>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+            {% if not topics %}
+        <div class="pl10 pr10">
+            <div class="alert mt20">该用户暂时还没有发表过话题。</div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="ui-footer">
+        <div class="pagination">{{ topics.page }}</div>
+    </div>
+</div>
+{% endblock %}

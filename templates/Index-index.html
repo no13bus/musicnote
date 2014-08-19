@@ -1,0 +1,203 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<include file="Index:header" />
+<body padding-top: 60px; background="__PUBLIC__/images/wallpaper.png";>
+    <include file="Index:navibar" />
+
+    <div class="container-fluid container mt15">
+        <div class="row-fluid">
+        <div class="span9 left">
+              <div class="subnav">   
+                <ul class="nav nav-pills">                    
+                    <li class="<eq name="active_tab" value="index">active</eq>">
+                        <a href="{:U('Index/Index/index')}">所有节点</a>
+                    </li>  
+                    <li class="<eq name="active_tab" value="favoritenode">active</eq>">
+                        <a href="{:U('Index/Index/index',array('tab'=>'favoritenode'))}">兴趣节点</a>
+                    </li> 
+                    <li class="<eq name="active_tab" value="follow">active</eq>">
+                        <a href="{:U('Index/Index/index')}">关注的人</a>
+                    </li>                                    
+                    <div class="subnav_btn">
+                        <a class="btn btn-small fr" type="button" style="color:#a2a2a2"href="{:U('Index/Nodes/create',array('node' => $node['slug']))}">发起新话题</a>
+                    </div>
+                </ul>
+            </div>
+
+            <div class="topics container-box deprecated-mt10">
+                <foreach name="list" item="topic">
+                <div class="topic-item">
+                    <img src="__ROOT__/Uploads/avatar/b_<empty name="topic['avatar']">default.png<else />{$topic.avatar}</empty>" alt="" class="avatar" />
+                    <div class="main">
+                        <h3 class="title">
+                            <a href="{:U('Index/Topic/index',array('topicid' => $topic['id']))}">{$topic.title}</a>
+
+                        </h3>
+                        <div class="meta">
+                            <span class="node">
+                                <a href="">{$topic.nodename}</a>
+                            </span>
+                            •
+                            <span class="username">
+                                <a href="">{$topic.username}</a>
+                            </span>
+                            • 
+                        <if condition="!empty($topic['last_replied_time'])">
+                            <span class="last-touched">{$topic.last_touched|timediff}</span>
+                            •
+                            <span class="last-reply-username">
+                                最后回复来自
+                                <a href=""> <strong>{$topic.last_replied_username}</strong>
+                                </a>
+                            </span>
+                        <else />
+                            <span class="last-touched">{$topic.last_touched|timediff}</span>
+                        </if>
+                        </div>
+                    </div>
+                    
+                    <if condition="!empty($topic['reply_count'])">
+                        <div class="count">
+                            <a href="">{$topic.reply_count}</a>
+                        </div>
+                        <else />
+                        <div class="count">
+                            <a href="">0</a>
+                        </div>
+                    </if>
+                    
+                </div>
+                </foreach>
+                <!-- 分页代码 -->
+                <div class="ui-footer">
+                    <div class="pagination">
+                    <ul>
+                        {$show}
+                    </ul>
+                    </div>
+                </div>
+            </div>
+
+            <section id="hotnav">
+            <div class="nodes-cloud container-box mt10">
+                <div class="fr"><a href="{:U('Index/Nodes/index')}">浏览全部小组</a></div>
+                <h4 class="title">热门导航</h4>
+                <ul>
+                    <foreach name='plane' item='v'>
+                        <li>
+                            <label for="">{$v.name}</label>
+                            <span class="nodes">
+                                <foreach name='v.node' item='value'>
+                                <span class="label label-success">
+                                <if condition='empty($slug)'><a href="{:U('Index/Nodes/nodetopic',array('slug' => $value['slug']))}" style="color:#FFFFFF">{$value.name}</a><else /><a href="{:U('Index/Nodes/create',array('node' => $value['slug']))}" style="color:#FFFFFF">{$value.name}</a></if>
+                                </span>
+                                </foreach>
+                            </span>
+                        </li>
+                    </foreach>
+                </ul>
+            </div>
+            </section>  
+
+
+        </div>
+
+        <div class="span3 right">
+            <div class="usercard container-box">
+                <div class="usercard container-box">
+                <div class="ui-header">
+                <a href="">
+                        <img src="__ROOT__/Uploads/avatar/b_<empty name="user_info['avatar']">default.png<else />{$user_info.avatar}</empty>" alt="" class="avatar" />
+                    </a>
+                    <div class="username">{$user_info.username}</div>                    
+                    <div class="website">
+                        <a href=""></a>
+                    </div>
+                </div>
+                <div class="ui-content">
+                    <div class="status status-topic"> <strong><a href="{:U('Index/User/topics')}">{$counter_topics|default="0"}</a></strong> 
+                        话题
+                    </div>
+                    <div class="status status-reply">
+                        <strong><a href="{:U('Index/User/replies')}">{$counter_replies|default="0"}</a></strong> 
+                        回复
+                    </div>
+                    <div class="status status-favorite">
+                        <strong>
+                            <a href="{:U('Index/User/favorites')}">{$counter_favorites|default="0"}</a>
+                        </strong>
+                        收藏
+                    </div>
+                    <div class="status status-reputation">
+                        <strong>
+                           {$counter_favorites|default="0"}
+                        </strong>
+                        声望
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="sidebox container-box mt10 ">
+                <div class="ui-header">
+                    <span class="title" style="color: #009a61">这是什么网站？<div class="fr"><a href="#">了解更多</a></div></span>
+                </div>
+                <div class="ui-content">
+                    MusicNote是一个专注于曲谱分享，创作，以及相关音乐相关的一个社区，在这里大家可以书写创作只属于你自己的曲谱，和曲位相投的朋友结识。MusicNote只为爱音乐的你而来。
+                    <p class="hor-tabs" style="margin-bottom: 0px">
+                        <a href="/register" style="color: #009a61">立即注册</a>
+                        <i></i>
+                        <a href="#" style="color: #009a61">如何发帖</a>
+                    </p>
+                </div>
+            </div>
+            <div class="sidebox container-box mt10 ">
+                <div class="ui-header">
+                    <span class="title" style="color: #009a61">今日热议</span>
+                </div>
+                <div class="ui-content">
+                    <foreach name="hot_topics" item="topic">
+                    <div class="topic-item">          
+                    <a href="">
+                        <img src="__ROOT__/Uploads/avatar/s_<empty name="topic['avatar']">default.png<else />{$topic.avatar}</empty>" alt="" class="avatar" />
+                    </a>
+                    <div class="main">
+                        <div class="title">
+                           <a href="{:U('Index/Topic/index',array('topicid' => $topic['id']))}">{$topic.title}</a>
+                        </div>
+                    </div>
+                    </div>
+                    </foreach>
+                </div>
+            </div>
+
+            <div class="sidebox container-box mt10 ">
+                <div class="ui-header">
+                    <span class="title" style="color: #009a61">最热小组<div class="fr"><a href="{:U('Index/Nodes/index')}">all</a></div></span>
+                </div>
+                <div class="ui-content hot-nodes">
+                    <foreach name="hot_nodes" item="node">
+                    <a href="{:U('Index/Nodes/nodetopic',array('slug' => $node['slug']))}">{$node.name}</a>
+                    </foreach>
+                </div>
+            </div>
+           
+            <div class="sidebox container-box mt10 ">
+                <div class="ui-header">
+                    <span class="title" style="color: #009a61">想获得最佳浏览体验？<div class="fr"><a href="http://www.google.cn/intl/zh-CN/chrome/browser/">快用Chrome吧！</a></div></span>
+                </div>
+                <div class="ui-content">
+                    <a href="http://www.google.cn/intl/zh-CN/chrome/browser/">
+                        <img src="http://pic.yupoo.com/gaolinjie_s/CFZgvVQa/medish.jpg" alt="" class="chrome">
+                    </a>
+                </div>
+            </div>
+            
+
+        </div>
+    </div>
+    </div>
+    <include file="Index:footer" />
+
+</body>
+</html>

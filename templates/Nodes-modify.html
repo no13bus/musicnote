@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<include file="Index:header" />
+<body padding-top: 60px; background="__PUBLIC__/images/wallpaper.png";>
+    <include file="Index:navibar" />
+    <div class="container-fluid container mt15">
+        <div class="row-fluid">
+        <div class="span9 left">
+        <div class="nodes-cloud container-box mt10">
+            <h4 class="title">所有小组</h4>
+            <ul>
+                <foreach name='planes' item='v'>
+                    <li>
+                        <label for="">{$v.name}</label>
+                        <span class="nodes">
+                            <foreach name='v.nodes' item='value'>
+                            <span class="label label-success">
+                            <a href="{:U('Index/Topic/create',array('slug' => $value['slug']))}" style="color:#FFFFFF">{$value.name}</a>
+                            </span>
+                            </foreach>
+                        </span>
+                    </li>
+                </foreach>
+            </ul>
+        </div>
+
+
+        </div>
+
+        <include file="Block:right" />
+    </div>
+    </div>
+    <include file="Index:footer" />
+</body>
+</html>

@@ -1,0 +1,291 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>MusicNote</title>
+    <script type="text/javascript" src="__PUBLIC__/js/base/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/base/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/base/in-min.js"></script>
+    <link rel="stylesheet" href="__PUBLIC__/css/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/css/main.css" />
+    
+    <link rel="stylesheet" href="/static/css/codehilite.css" />
+
+    <link rel="icon" href="__PUBLIC__/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="__PUBLIC__/favicon.ico" type="image/x-icon" />
+    
+    <script type="text/javascript" src="__PUBLIC__/js/base/jquery.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/widget/bootstrap-typeahead.js"></script>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            $('.J_search').submit(function(e) {
+                var _node = $(this);
+                var query = _node.find('input').val();
+                e.preventDefault();
+                window.open('http://www.google.com.hk/search?q=site:3n1b.com/t%20' + query, "_blank");
+            });
+        });
+    </script>
+    
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-37976592-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+<body padding-top: 60px; background="__PUBLIC__/images/wallpaper.png";>
+    <div class="navbar  navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <a class="brand" href="/">MusicNote</a>
+
+                <!--/.nav-collapse -->
+                <form class="navbar-search pull-left J_search">
+                    <input type="text" class="search-query" placeholder="Search"></form>
+
+                <div class="nav-collapse collapse">
+                    <ul class="nav">                        
+                        <li class="<if condition="$active_page eq 'index'">active</if>">
+                            <a href="__APP__">首页</a>
+                        </li>
+                        <li class="<if condition="$active_page eq 'nodes'">active</if>">
+                            <a href="{:U('Index/Nodes/index')}">小组</a>
+                        </li>
+                        <li class="<if condition="$active_page eq 'users'">active</if>">
+                            <a href="{:U('Index/User/members')}">成员</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+
+                <div class="nav-collapse collapse pull-right">
+                    <ul class="nav">  
+                        <if condition="$loginbool eq 1">
+                            <li>
+                            <a href="{:U('Index/User/index')}">{$user_info.username}</a>
+                            </li>
+                            <li>
+                                <a href="{:U('Index/Login/logout')}">退出</a>
+                            </li>
+
+                        <else />
+                           <li>
+                            <a href="{:U('Index/Login/index')}">登录</a>
+                            </li>
+                            <li>
+                                <a href="{:U('Index/Register/index')}">注册</a>
+                            </li>
+                        </if>            
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid container mt15">
+        <div class="row-fluid">
+        <div class="span9 left">
+                <div class="topic-detail container-box">
+    <div class="ui-header">
+        <a href="/u/{{ topic.author_username or topic.author_uid }}">
+            <img src="__ROOT__/Uploads/avatar/m_<empty name="topic['avatar']">default.png<else />{$topic.avatar}</empty>" alt="" class="avatar" />
+        </a>
+        <div class="main">
+            <h3 class="title">{$topic.title}</h3>
+            <div class="meta">
+                <span class="node">
+                    <a href="{:U('Index/Nodes/nodetopic',array('slug' => $topic['nodeslug']))}">{$topic.nodename}</a>
+                </span>
+                •
+                <span class="username">
+                    <a href="">{$topic.username}</a>
+                </span>
+                • 
+                    <if condition="!empty($topic['last_replied_time'])">
+                <span class="created-time">发表于 {$topic.created|timediff}</span>
+                •
+                <span class="last-reply-username">
+                    最后回复来自
+                    <a href=""> <strong>{$topic.last_replied_username}</strong>
+                    </a>
+                </span>
+                •
+                <span class="last-reply-time">{$topic.last_replied_time|timediff}</span>
+                <else />
+                <span class="created-time">发表于 {$topic.created|timediff }}</span>
+                </if>
+            </div>
+        </div>
+    </div>
+    <div class="ui-content">{$topic.content}</div>
+    <div class="ui-footer">
+        <if condition="$user_info['uid'] neq $topic['author_id']">
+            <a href="{:U('Index/Topic/favorite',array('topicid' => $topic['id']))}" class="J_topicFavorite">{$favorite_text}</a>
+        </if>
+        <!-- {/*
+        <a href="#" onclick="window.open('https://twitter.com/intent/tweet?hashtags={{ topic.node_slug }}&text={{ topic.title }}&url=http://{{ request.host }}{{ request.uri }}');">Tweet</a>
+        */} -->
+        <a href="#" onclick="window.open('http://service.weibo.com/share/share.php?url=http://{{ request.host }}{{ request.uri }}&title={叁年壹班}%20-%20{{ topic.title }}', '_blank', 'width=550, height=370');">新浪微博</a>
+        <a href="{:U('Index/Topic/vote',array('topicid' => $topic['id']))}" class="J_topicVote">{$vote_text}</a>
+
+        <if condition="!empty($user_info) && $user_info['uid'] eq $topic['author_id']">
+        <a href="{:U('Index/Topic/topicedit',array('topicid' => $topic['id']))}" class="fr">编辑话题</a>
+        </if>
+
+        <span class="hits fr mr10">{$topic['hits'] ? $topic['hits'] : 0} 次点击</span>
+    </div>
+</div>
+
+
+<if condition="!empty($replies)">
+<div class="topic-reply container-box mt10">
+    <div class="ui-header">
+        <span>共收到{$replies|count}条回复</span>
+    </div>
+    <div class="ui-content">
+        <?php $i=0; ?>
+        <foreach name="replies" item="reply">
+        <?php $i++; ?>
+        <div class="reply-item">
+            <a href="{$reply.username}">
+                <img src="__ROOT__/Uploads/avatar/m_<empty name="reply['avatar']">default.png<else />{$reply.avatar}</empty>" alt="" class="avatar" />
+            </a>
+            <div class="main">
+                <div class="meta">
+                    <a href="{$reply.username}" class="reply-username">
+                        <span class="username">{$reply.username}</span>
+                    </a>
+                    <span class="time">{$reply.created|timediff}</span>
+                    <if condition="!empty($user_info) && $user_info['uid'] eq $reply['author_id']">
+                    <a href="{$reply.rid}">编辑回复</a>
+                    </if>
+                    <span class="floor fr">#<?php echo $i;?></span>
+                    <span class="reply-to fr J_replyTo" data-username="{$reply.username}">
+                        <img src="__PUBLIC__/images/reply.png" alt="" />
+                    </span>
+                </div>
+                <span class="content">{$reply.content}</span>
+            </div>
+        </div>
+        </foreach>
+    </div>
+    <div class="ui-footer">
+        <div class="pagination pagination-mini">分页逻辑</div>
+    </div>
+</div>
+<else />
+<div class="alert mt20">暂无回复，说出您的观点吧</div>
+</if>
+
+
+<div class="topic-reply-create container-box mt10">
+    <if condition="!empty($user_info)">
+        <div class="ui-header">
+            <span class="title">创建新的回复</span>
+        </div>
+        <div class="ui-content">
+            <form class="mt10" action="{:U('Index/Topic/replyhandle')}" method="post">
+                
+                <textarea rows="3" class="content mt5 smart-code-support J_replyContent" placeholder="回复内容" name="content"></textarea>
+                <input name="tid" type="hidden" value="{$topic.id}" />
+                <input type="submit" id="checkall" class="btn btn-small" value="立即回复">
+
+            </form>
+        </div>
+    <else />
+        <div class="ui-header">
+            <span class="title">登录后即可参与回复</span>
+        </div>
+        <div class="ui-content">
+            <a class="btn btn-small" type="button" href="{:U('Index/Login/index')}">登录</a>
+            <a class="btn btn-small" type="button" href="{:U('Index/Register/index')}">注册</a>
+        </div>
+    </if>
+</div>
+
+</div>
+
+
+
+<div class="span3 right">
+                <div class="usercard container-box">
+                <div class="ui-header">
+                <a href="">
+                        <img src="__ROOT__/Uploads/avatar/b_<empty name="user_info['avatar']">default.png<else />{$user_info.avatar}</empty>" alt="" class="avatar" />
+                    </a>
+                    <div class="username">{$user_info.username}</div>                    
+                    <div class="website">
+                        <a href=""></a>
+                    </div>
+                </div>
+                <div class="ui-content">
+                    <div class="status status-topic"> <strong><a href="{:U('Index/User/topics')}">{$counter_topics|default="0"}</a></strong> 
+                        话题
+                    </div>
+                    <div class="status status-reply">
+                        <strong><a href="{:U('Index/User/replies')}">{$counter_replies|default="0"}</a></strong> 
+                        回复
+                    </div>
+                    <div class="status status-favorite">
+                        <strong>
+                            <a href="{:U('Index/User/favorites')}">{$counter_favorites|default="0"}</a>
+                        </strong>
+                        收藏
+                    </div>
+                    <div class="status status-reputation">
+                        <strong>
+                           {$counter_favorites|default="0"}
+                        </strong>
+                        声望
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="sidebox container-box mt10 ">
+                <div class="ui-header">
+                    <span class="title" style="color: #009a61">这是什么网站？<div class="fr"><a href="#">了解更多</a></div></span>
+                </div>
+                <div class="ui-content">
+                    MusicNote是一个专注于曲谱分享，创作，以及相关音乐相关的一个社区，在这里大家可以书写创作只属于你自己的曲谱，和曲位相投的朋友结识。MusicNote只为爱音乐的你而来。
+                    <p class="hor-tabs" style="margin-bottom: 0px">
+                        <a href="/register" style="color: #009a61">立即注册</a>
+                        <i></i>
+                        <a href="#" style="color: #009a61">如何发帖</a>
+                    </p>
+                </div>
+            </div>
+            <div class="sidebox container-box mt10 ">
+                <div class="ui-header">
+                    <span class="title" style="color: #009a61">最热小组<div class="fr"><a href="{:U('Index/Nodes/index')}">all</a></div></span>
+                </div>
+                <div class="ui-content hot-nodes">
+                    <foreach name="hot_nodes" item="node">
+                    <a href="{:U('Index/Nodes/nodetopic',array('slug' => $node['slug']))}">{$node.name}</a>
+                    </foreach>
+                </div>
+            </div>
+            
+        </div>
+        </div>
+    </div>
+    </div>
+    <include file="Index:footer" />
+</body>
+</html>

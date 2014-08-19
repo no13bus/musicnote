@@ -1,0 +1,63 @@
+<div class="span3 right">
+
+        {% if request.user.is_authenticated %}
+        <div class="usercard container-box">
+            <div class="ui-header">
+                <a href="{% url 'member_info' request.user.username %}">
+                    <img src="{% if request.user.userprofile.avatar %}{{ STATIC_URL }}avatar/m_{{ request.user.userprofile.avatar }}.png{% else %}{{ STATIC_URL }}avatar/m_default.png{% endif %}" alt="" class="avatar" />
+                </a>
+                <div class="username">{{ request.user.username }}</div>                    
+                <div class="website">
+                    <a href="">{{ request.user.userprofile.location }}</a>
+                </div>
+            </div>
+            <div class="ui-content">
+                <div class="status status-topic"> <strong><a href="{% url 'user_topics' request.user.username %}">{{ topics }}</a></strong> 
+                    话题
+                </div>
+                <div class="status status-reply">
+                    <strong><a href="{% url 'user_replies' request.user.username %}">{{ replies }}</a></strong> 
+                    回复
+                </div>
+                <div class="status status-favorite">
+                    <strong>
+                        <a href="{% url 'user_collections' request.user.username %}">00</a>
+                    </strong>
+                    收藏
+                </div>
+                <div class="status status-reputation">
+                    <strong>
+                       {{ request.user.reputation }}
+                   </strong>
+                   声望
+               </div>
+           </div>
+       </div>
+        {% endif %}
+
+       <div class="sidebox container-box mt10 ">
+        <div class="ui-header">
+            <span class="title" style="color: #009a61">这是什么网站？<div class="fr"><a href="#">了解更多</a></div></span>
+        </div>
+        <div class="ui-content">
+            MusicNote是一个专注于曲谱分享，创作，以及相关音乐相关的一个社区，在这里大家可以书写创作只属于你自己的曲谱，和曲位相投的朋友结识。MusicNote只为爱音乐的你而来。
+            <p class="hor-tabs" style="margin-bottom: 0px">
+                <a href="/register" style="color: #009a61">立即注册</a>
+                <i></i>
+                <a href="#" style="color: #009a61">如何发帖</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="sidebox container-box mt10 ">
+        <div class="ui-header">
+            <span class="title" style="color: #009a61">最热小组<div class="fr"><a href="{:U('Index/Nodes/index')}">all</a></div></span>
+        </div>
+        <div class="ui-content hot-nodes">
+            <foreach name="hot_nodes" item="node">
+                <a href="{:U('Index/Nodes/nodetopic',array('slug' => $node['slug']))}">{$node.name}</a>
+            </foreach>
+        </div>
+    </div>
+</div>
+</div>

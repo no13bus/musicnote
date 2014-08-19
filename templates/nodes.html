@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div class="container-fluid container mt15">
+    <div class="row-fluid">
+    <div class="span9 left">
+    <div class="nodes-cloud container-box mt10">
+        <h4 class="title">所有小组</h4>
+        <ul>
+            {% for plane in planes %}
+                <li>
+                    <label for="">{{ plane.name }}</label>
+                    <span class="nodes">
+                        {% for node in plane.node_set.all %}
+                        <span class="label label-success">
+                        <a href="{% url 'nodetopics' node.slug %}" style="color:#FFFFFF">{{ node.name }}</a>
+                        </span>
+                        {% endfor %}
+                    </span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+
+    </div>
+
+{% endblock %}

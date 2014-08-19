@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+    {% block content %}
+    <div class="container-fluid container mt15">
+        <div class="row-fluid">
+        <div class="span9 left">
+                <div class="topic-create container-box">
+                    <div class="ui-header">
+                        <span class="title">修改话题 
+                            <span class="label label-success" style="margin-left:8px">
+                                <a href="" style="color:#FFFFFF">修改指南</a>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="ui-content">
+                        {% if form.title.errors or form.content.errors %}
+                            <ul class="errors alert alert-error">
+                                    {% for error in form.title.errors %}
+                                    <li>{{ error }}</li>
+                                    {% endfor %}
+                                    {% for error in form.content.errors %}
+                                    <li>{{ error }}</li>
+                                    {% endfor %}
+                            </ul>
+                        {% endif %}
+
+                        <form class="mt10" action="" method="post">     
+                            {% csrf_token %}                       
+                            <div class="input-prepend mt10">
+                                <span class="add-on">#</span>
+                                {{ form.title }}
+                            </div>
+                                {{ form.content }}
+                            <input type="submit" id="checkall" class="btn btn-small" value="立即修改">
+                            <div class="fr"><a href="http://weibotuchuang.sinaapp.com/bookmark.html">图片上传工具</a></div>
+                        </form>             
+                    </div>
+
+                </div>
+                </div>
+    {% endblock %}
+            

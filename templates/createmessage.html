@@ -1,0 +1,81 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div class="container-fluid container mt15">
+    <div class="row-fluid">
+        <div class="span9 left">
+            <div class="topic-create container-box">
+                <div class="ui-header">
+                <span class="title">发送私信给 <span class="label label-success"><a href="{% url 'member_info' to_member %}" style="color:#FFFFFF">{{ to_member }}</a></span></span>    
+                </div>
+                <div class="ui-content">
+                    {% if form.content.errors %}
+                        <ul class="errors alert alert-error">
+                            {% for error in form.content.errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    <form class="mt10" action="" method="post">
+                        {% csrf_token %}
+                        {{ form.content }}
+                        <input type="submit" id="checkall" class="btn btn-small" value="立即发送">
+                    </form>          
+                    </div>
+                    <div class="ui-header">
+                        <span class="title">与 <span class="label label-success" ><a href="{% url 'member_info' to_member %}" style="color:#FFFFFF">{{ to_member }}</a></span> 的私信记录：</span>
+                    </div>
+                    <div class="ui-content">
+                        {% for item in user_messages %}
+                        <div class="notification-item">
+                            <a href="{% url 'member_info' item.from_user.username %}">
+                                <img src="{% if item.from_user.userprofile.avatar %}{{ STATIC_URL }}avatar/m_{{ item.from_user.userprofile.avatar }}.png{% else %}{{ STATIC_URL }}avatar/m_default.png{% endif %}" alt="" class="avatar" />
+                            </a>
+                            <div class="main">
+                                <span class="title">
+                                    {% if item.from_user.username == request.user.username %}
+                                        <a href="{% url 'member_info' request.user.username %}">
+                                            我
+                                        </a>
+                                        发送给
+                                        <a href="{% url 'member_info' to_member %}">
+                                            {{ to_member }}
+                                        </a>
+                                    {% else %}
+                                        <a href="{% url 'member_info' request.user.username %}">
+                                            {{ to_member }}
+                                        </a>
+                                        发送给
+                                        <a href="{% url 'member_info' to_member %}">
+                                            我
+                                        </a>
+                                    {% endif %}
+                                </span>
+                                <span class="floor fr">{{ item.created }}</span>
+                                <div class="content">私心一个</div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                        {% if not user_messages %}
+                        <div class="pl10 pr10">
+                            <div class="alert mt20">您暂时还没有私信。</div>
+                        </div>
+                        {% endif %}   
+
+
+                    </div>
+                    <div class="ui-footer">
+                        <div class="pagination">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

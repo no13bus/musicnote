@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<include file="Index:header" />
+<body padding-top: 60px; background="__PUBLIC__/images/wallpaper.png";>
+    <include file="Index:navibar" />
+
+    <div class="container-fluid container mt15">
+        <div class="row-fluid">
+        <div class="span9 left">
+                <div class="container-box">
+                    <form class="form-horizontal" action='{:U('Index/User/forgotpwd')}' method="POST">
+                        <fieldset>
+                            <div id="legend" class="mb50">
+                                <legend class="">找回密码</legend>
+                            </div>
+                            <if condition="!empty($errormsg)" >
+                                <ul class="errors alert alert-error">
+                                        <li>{$errormsg}</li>
+                                </ul>
+                            </if>
+                            <!-- {{ errors|dump_errors }} -->
+                            <div class="control-group">
+                                <!-- Username -->
+                                <label class="control-label" for="username">用户名</label>
+                                <div class="controls">
+                                    <input type="text" id="username" name="username" placeholder="" class="input-xlarge">
+                                    <p class="help-block">用户名由字母开头，只能含有字母、数字或者下划线</p>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <!-- E-mail -->
+                                <label class="control-label" for="email">E-mail</label>
+                                <div class="controls">
+                                    <input type="text" id="email" name="email" placeholder="" class="input-xlarge">
+                                    <p class="help-block">请输入您的E-mail，新密码将发送到这里</p>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button class="btn btn-success">找回密码</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <input type="hidden" name="_xsrf" value="49617ac9bf2c49dfa3e5476942718cfd">
+                        <!-- {{ xsrf_form_html() }} -->
+                    </form>
+                </div>
+            </div>
+
+            <include file="Block:right" />
+        </div>
+    </div>
+    <include file="Index:footer" />
+</body>
+</html>

@@ -1,0 +1,53 @@
+<div class="navbar  navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <a class="brand" href="/">MusicNote</a>
+
+                <!--/.nav-collapse -->
+                <form class="navbar-search pull-left J_search">
+                    <input type="text" class="search-query" placeholder="Search">
+                </form>
+
+                <div class="nav-collapse collapse">
+                    <ul class="nav">                        
+                        <li class="{% if active_page == 'index' %}active{% endif %}">
+                            <a href="{% url 'index' %}">首页</a>
+                        </li>
+                        <li class="{% if active_page == 'nodes' %}active{% endif %}">
+                            <a href="{% url 'nodes' %}">小组</a>
+                        </li>
+                        <li class="{% if active_page == 'users' %}active{% endif %}">
+                            <a href="{% url 'users' %}">成员</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+                <div class="nav-collapse collapse pull-right">
+                    <ul class="nav">  
+                        {% if request.user.is_authenticated %}
+                            <li>
+                            <a href="{% url 'setting' %}">{{ request.user.username }}</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'signout' %}">退出</a>
+                            </li>
+                        {% else %}
+                           <li>
+                            <a href="{% url 'signin' %}">登录</a>
+                            </li>
+                            <li>
+                                <a href="/register">注册</a>
+                            </li>
+                        {% endif %}        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>

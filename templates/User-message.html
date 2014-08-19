@@ -1,0 +1,176 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<include file="Index:header" />
+<body padding-top: 60px; background="__PUBLIC__/images/wallpaper.png";>
+    <div class="navbar  navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <a class="brand" href="__APP__">MusicNote</a>
+
+                <!--/.nav-collapse -->
+                <form class="navbar-search pull-left J_search">
+                    <input type="text" class="search-query" placeholder="Search">
+                </form>
+                <div class="nav-collapse collapse">
+                    <ul class="nav">                        
+                        <li class="<if condition="$active_page eq 'index'">active</if>">
+                            <a href="__APP__">首页</a>
+                        </li>
+                        <li class="<if condition="$active_page eq 'nodes'">active</if>">
+                            <a href="{:U('Index/Nodes/index')}">小组</a>
+                        </li>
+                        <li class="<if condition="$active_page eq 'members'">active</if>">
+                            <a href="{:U('Index/User/members')}">成员</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+
+                <div class="nav-collapse collapse pull-right">
+                    <ul class="nav">  
+                        <if condition="$loginbool eq 1">
+                            <li>
+                            <a href="{:U('Index/User/index')}">{$user_info.username}</a>
+                            </li>
+                            <li>
+                                <a href="{:U('Index/Login/logout')}">退出</a>
+                            </li>
+
+                        <else />
+                           <li>
+                            <a href="{:U('Index/Login/index')}">登录</a>
+                            </li>
+                            <li>
+                                <a href="{:U('Index/Register/index')}">注册</a>
+                            </li>
+                        </if>            
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid container mt15">
+        <div class="row-fluid">
+        <div class="span9 left">
+             <div class="topic-create container-box">             
+    <div class="ui-header">
+        <span class="title">发送私信给 <span class="label label-success"><a href="{:U('Index/User/profile',array('username' => $to_user['username']))}" style="color:#FFFFFF">{$to_user.username}</a></span></span>    
+    </div>
+    <div class="ui-content">
+        <form class="mt10" action="{:U('Index/User/msghandle')}" method="post">
+            
+            <textarea rows="3" class="content mt5 smart-code-support" placeholder="输入私信内容" name="content" style="width: 640px; height: 54px;"></textarea>
+            <input type="hidden" name="to_username" value="{$to_user.username}">
+            <input type="submit" id="checkall" class="btn btn-small" value="立即发送">
+        </form>          
+    </div>
+    <div class="ui-header">
+        <span class="title">与 <span class="label label-success" ><a href="{:U('Index/User/profile',array('username' => $to_user['username']))}" style="color:#FFFFFF">{$to_user.username}</a></span> 的私信记录：</span>
+    </div>
+    <div class="ui-content">
+    <foreach name="messages" item="message">
+        <div class="notification-item">
+            <a href="{:U('Index/User/profile',array('username' => $to_user['username']))}">
+                <img src="__ROOT__/Uploads/avatar/m_<empty name="message['avatar']">default.png<else />{$message.avatar}</empty>" alt="" class="avatar" />               
+            </a>
+            <div class="main">
+                <span class="title">
+                    <a href="{:U('Index/User/profile',array('username' => $to_user['username']))}">
+                        {% if message.from_user_username == user_info.username: %}
+                            我
+                        {% else: %}
+                            {{ message.from_user_username }}
+                        {% endif %}
+                    </a>
+                    发送给
+                    <a href="{:U('Index/User/profile',array('username' => $to_user['username']))}">
+                        {% if message.to_user_username == user_info.username: %}
+                            我
+                        {% else: %}
+                            {{ message.to_user_username }}
+                        {% endif %}
+                    </a>
+                </span>
+                <span class="floor fr">{{ message.created|pretty_date }}</span>
+                <div class="content">{{ message.content }}</div>
+            </div>
+        </div>
+    </foreach>
+
+        {% if messages.page.total == 0 %}
+        <div class="pl10 pr10">
+            <div class="alert mt20">您暂时还没有私信。</div>
+        </div>
+        {% endif %}        
+    </div>
+    <div class="ui-footer">
+        <div class="pagination">{{ messages.page|pagination(request.uri) }}</div>
+    </div>
+</div>
+
+        </div>
+
+        <div class="span3 right">
+             <div class="usercard container-box">
+                <div class="usercard container-box">
+                <div class="ui-header">
+                <a href="">
+                        <img src="__ROOT__/Uploads/avatar/b_<empty name="user_info['avatar']">default.png<else />{$user_info.avatar}</empty>" alt="" class="avatar" />
+                    </a>
+                    <div class="username">{$user_info.username}</div>                    
+                    <div class="website">
+                        <a href=""></a>
+                    </div>
+                </div>
+                <div class="ui-content">
+                    <div class="status status-topic"> <strong><a href="{:U('Index/User/topics')}">{$counter_topics|default="0"}</a></strong> 
+                        话题
+                    </div>
+                    <div class="status status-reply">
+                        <strong><a href="{:U('Index/User/replies')}">{$counter_replies|default="0"}</a></strong> 
+                        回复
+                    </div>
+                    <div class="status status-favorite">
+                        <strong>
+                            <a href="{:U('Index/User/favorites')}">{$counter_favorites|default="0"}</a>
+                        </strong>
+                        收藏
+                    </div>
+                    <div class="status status-reputation">
+                        <strong>
+                           {$counter_favorites|default="0"}
+                        </strong>
+                        声望
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="sidebox container-box mt10 ">
+                <div class="ui-header">
+                    <span class="title" style="color: #009a61">这是什么网站？<div class="fr"><a href="#">了解更多</a></div></span>
+                </div>
+                <div class="ui-content">
+                    MusicNote是一个专注于曲谱分享，创作，以及相关音乐相关的一个社区，在这里大家可以书写创作只属于你自己的曲谱，和曲位相投的朋友结识。MusicNote只为爱音乐的你而来。
+                    <p class="hor-tabs" style="margin-bottom: 0px">
+                        <a href="/register" style="color: #009a61">立即注册</a>
+                        <i></i>
+                        <a href="#" style="color: #009a61">如何发帖</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <include file="Index:footer" />
+
+</body>
+</html>

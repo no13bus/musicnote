@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+    {% block content %}
+    <div class="container-fluid container mt15">
+        <div class="row-fluid">
+        <div class="span9 left">
+              <div class="member-lists container-box">
+                <div class="ui-header">
+                    <span class="title">社区活跃成员</span>
+                </div>
+                <div class="ui-content">
+                    {% for member in active_users %}
+                        <div class="member">
+                            <a href="{% url 'member_info' member.username %}">
+                                <img src="{% if member.userprofile.avatar %}{{ STATIC_URL }}avatar/m_{{ member.userprofile.avatar }}.png{% else %}{{ STATIC_URL }}avatar/m_default.png{% endif %}" alt="" class="avatar" />
+                            </a>
+                            <span class="username">
+                                <a href="">{{ member.username }}</a>
+                            </span>
+                        </div>
+                    {% endfor %}
+                    </div>
+                </div>
+
+                <div class="member-lists container-box mt10">
+                    <div class="ui-header">
+                        <span class="title">最新加入成员</span>
+                    </div>
+                    <div class="ui-content">
+                        {% for member in recent_reg_user %}
+                        <div class="member">
+                            <a href="">
+                                <img src="{{ STATIC_URL }}avatar/b_default.png" alt="" class="avatar" />
+                            </a>
+                            <span class="username">
+                                <a href="">{{ member.username }}</a>
+                            </span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+     {% endblock %}
+
+       

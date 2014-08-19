@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<include file="Index:header" />
+<body padding-top: 60px; background="__PUBLIC__/images/wallpaper.png";>
+    <include file="Index:navibar" />
+    <div class="container-fluid container mt15">
+        <div class="row-fluid">
+        <div class="span9 left">
+                <div class="topic-create container-box">
+                    <div class="ui-header">
+                        <span class="title">创建新话题 
+                            <span class="label label-success" style="margin-left:8px">
+                                <a href="" style="color:#FFFFFF">发帖指南</a>
+                            </span>
+                        </span>
+                    </div>
+
+                    <div class="ui-content">
+                        <form class="mt10" action="{:U('Index/Topic/create',array('slug' => $node['slug']))}" method="post">
+                            <!-- {{ errors|dump_errors }} -->
+                            <div class="input-prepend mt10">
+                                <span class="add-on">#</span>
+                                <input class="span11" id="prependedInput" type="text" placeholder="话题" name="title"></div>
+                            <textarea rows="3" class="content mt5 smart-code-support" placeholder="请先在下方选择小组，再编辑内容。" name="content"></textarea>
+                            
+                            <div class="btn-group">
+                                <button class="btn dropdown-toggle btn-small" data-toggle="dropdown">{$node.name}<span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">{$node.name}</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="{:U('Index/Nodes/modify',array('slug' => $node['slug']))}">修改小组...</a></li>
+                                </ul>
+                            </div>
+                            
+                            
+                            <input type="submit" id="checkall" class="btn btn-small" value="立即创建">
+                            <div class="fr"><a href="http://weibotuchuang.sinaapp.com/bookmark.html">图片上传工具</a></div>
+                        </form>             
+                    </div>
+
+                </div>
+
+            </div>
+
+            <include file="Block:right" />
+                     
+        </div>
+    </div>
+    <include file="Index:footer" />
+</body>
+</html>

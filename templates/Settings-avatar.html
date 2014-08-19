@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<include file="Index:header" />
+<body padding-top: 60px; background="__PUBLIC__/images/wallpaper.png";>
+    <include file="Index:navibar" />
+
+    <div class="container-fluid container mt15">
+        <div class="row-fluid">
+            <div class="span9 left">
+                <div class="container-box">
+                <form class="form-horizontal" action='{:U('Index/Settings/avatar')}' method="POST" enctype="multipart/form-data">
+                    <fieldset>
+                        <div id="legend">
+                            <legend class="">用户头像设置</legend>
+                        </div>
+                        <if condition="!empty($errormsg)" >
+                                <ul class="errors alert alert-error">
+                                        <li>{$errormsg}</li>
+                                </ul>
+                        </if>
+
+                        <div class="control-group">
+                            <!-- Avatar -->
+                            <label class="control-label" for="username">头像</label>
+                            <div class="controls">
+                                <img src="__ROOT__/Uploads/avatar/b_<empty name="user_info['avatar']">default.png<else />{$user_info.avatar}</empty>" alt="" class="avatar" />
+                                <img src="__ROOT__/Uploads/avatar/m_<empty name="user_info['avatar']">default.png<else />{$user_info.avatar}</empty>" alt="" class="avatar" />
+                                <img src="__ROOT__/Uploads/avatar/s_<empty name="user_info['avatar']">default.png<else />{$user_info.avatar}</empty>" alt="" class="avatar" />
+                            <!--     <a href="{:U('Index/User/setavatar')}" class="btn btn-block set-avatar-btn">设置头像</a> -->
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <!-- Avatar-->
+                            <label class="control-label" for="avatar">上传</label>
+                            <div class="controls">
+                                <input type="file" id="avatar" name="avatar" placeholder="" class="input-xlarge">
+                                <p class="help-block">请选择要上传的头像文件</p>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <!-- Button -->
+                            <div class="controls">
+                                <button class="btn btn-success">保存改动</button>
+                                <a href="{:U('Index/Settings/gravatar')}" class="ml10 btn">从Gravatar获取</a>
+                                <a href="{:U('Index/Settings/index')}" class="ml10 btn">返回设置页</a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+                </div>
+
+            </div>
+
+        <div class="span3 right">
+            <div class="sidenav container-box">
+                <ul>
+                    <li class="current">
+                        <a href="{:U('Index/Settings/index')}">用户中心</a>
+                    </li>
+                    <li>
+                        <a href="{:U('Index/Settings/avatar')}">设置头像</a>
+                    </li>
+                    <li>
+                        <a href="{:U('Index/Settings/setpwd')}">设置密码</a>
+                    </li>
+                    <li>
+                        <a href="__APP__">返回首页</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    </div>
+    <include file="Index:footer" />
+</body>
+</html>

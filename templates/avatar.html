@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+    {% block content %}
+    <div class="container-fluid container mt15">
+        <div class="row-fluid">
+            <div class="span9 left">
+                <div class="container-box">
+                <form class="form-horizontal" action='' method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <fieldset>
+                        <div id="legend">
+                            <legend class="">用户头像设置</legend>
+                        </div>
+
+                        {% if messages %}
+                            <ul class="errors alert alert-error">
+                                {% for message in messages %}
+                                <li>{{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+
+                        {% if form.avatar.errors %}
+                            <ul class="errors alert alert-error">
+                                    {% for error in form.avatar.errors %}
+                                    <li>{{ error }}</li>
+                                    {% endfor %}
+                            </ul>
+                        {% endif %}
+                        <div class="control-group">
+                            <!-- Avatar -->
+                            <label class="control-label" for="username">头像</label>
+                            <div class="controls">
+                                <img src="{% if request.user.userprofile.avatar %}{{ STATIC_URL }}avatar/b_{{ request.user.userprofile.avatar }}.png{% else %}{{ STATIC_URL }}avatar/b_default.png{% endif %}" alt="" class="avatar" />
+                                <img src="{% if request.user.userprofile.avatar %}{{ STATIC_URL }}avatar/m_{{ request.user.userprofile.avatar }}.png{% else %}{{ STATIC_URL }}avatar/m_default.png{% endif %}" alt="" class="avatar" />
+                                <img src="{% if request.user.userprofile.avatar %}{{ STATIC_URL }}avatar/s_{{ request.user.userprofile.avatar }}.png{% else %}{{ STATIC_URL }}avatar/s_default.png{% endif %}" alt="" class="avatar" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <!-- Avatar-->
+                            <label class="control-label" for="avatar">上传</label>
+                            <div class="controls">
+                                {{ form.avatar }}
+                                <p class="help-block">请选择要上传的头像文件</p>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <!-- Button -->
+                            <div class="controls">
+                                <button class="btn btn-success">保存改动</button>
+                                <a href="{% url 'gravatar' %}" class="ml10 btn">从Gravatar获取</a>
+                                <a href="{% url 'setting' %}" class="ml10 btn">返回设置页</a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+                </div>
+
+            </div>
+        {% endblock %}
+        

@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid container mt15">
+<div class="row-fluid">
+    <div="span9 left">
+    <div class="user-page">
+        <div class="profile container-box">
+            <div class="ui-header">
+                <a href="{% url 'member_info' member.username %}">
+                    <img src="{% if member.userprofile.avatar %}{{ STATIC_URL }}avatar/m_{{ member.userprofile.avatar }}.png{% else %}{{ STATIC_URL }}avatar/m_default.png{% endif %}" alt="" class="avatar" />
+                </a>
+                <div class="username">{{ member.username }}
+                    {% if request.user.username != member.username %}<span class="label label-success" style="margin-left:4px"><a href="" style="color:#FFFFFF">{{ follow_user_text }}</a></span>{% endif %}
+                </div>
+         
+                <div class="user-number">
+                    <div class="number">MusicNote 第{{ member.id }}号成员</div>
+                    <div class="since">入住于 {{ member.date_joined }}</div>
+                </div>
+            </div>
+
+            <div class="ui-content">
+                {% if member.userprofile.signature %}
+                <dl>
+                    <dt>签名</dt>
+                    <dd>{{ member.userprofile.signature }}</dd>
+                </dl>
+                {% endif %}
+                {% if member.userprofile.location %}
+                <dl>
+                    <dt>城市</dt>
+                    <dd>{{ member.userprofile.location }}</dd>
+                </dl>
+                {% endif %}
+                {% if member.userprofile.self_intro %}
+                <dl>
+                    <dt>自我介绍</dt>
+                    <dd>{{ member.userprofile.self_intro }}</dd>
+                </dl>
+                {% endif %}
+                                
+                {% if request.user.username != member.username %}<span class="label label-warning pull-right" style="margin-left:4px"><a href="{% url 'createmessage' member.username %}" style="color:#FFFFFF">私信</a></span>{% endif %}
+            </div>
+        </div>
+
+        <div class="topic-lists container-box mt10">
+            <div class="ui-header">
+                <span class="title">话题列表</span>
+            </div>
+            <div class="ui-content topics">
+                {% for item in topics %}
+                <div class="topic-item">
+                    <img src="{% if item.author.userprofile.avatar %}{{ STATIC_URL }}avatar/m_{{ item.author.userprofile.avatar }}.png{% else %}{{ STATIC_URL }}avatar/m_default.png{% endif %}" alt="" class="avatar" />
+                    <div class="main">
+                        <h3 class="title">
+                            <a href="{% url 'topicview' item.id %}#reply{{ item.reply_count }}">{{ item.title }}</a>
+                        </h3>
+                        <div class="meta">
+                            <span class="node">
+                                <a href="{% url 'nodetopics' item.node.slug %}">{{ item.node.name }}</a>
+                            </span>
+                            •
+                            <span class="username">
+                                <a href="{% url 'member_info' item.author.username %}">{{ item.author.username }}</a>
+                            </span>
+                            • 
+                            {% if item.last_replied_by %}
+                            <span class="created-time">发表于 {{ item.created }}</span>
+                            •
+                            <span class="last-reply-username">
+                                最后回复来自
+                                <a href=""> <strong>{{ item.last_replied_by.username }}</strong>
+                                </a>
+                            </span>
+                            •
+                            <span class="last-reply-time">{{ item.last_replied_time }}</span>
+                            {% else %}
+                            <span class="created-time">发表于 {{ item.created }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if item.reply_count %}
+                        <div class="count">
+                            <a href="{% url 'topicview' item.id %}#reply{{ item.reply_count }}">{{ item.reply_count }}</a>
+                        </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            <div class="ui-footer">
+                <a href="">›› 查看更多话题</a>
+            </div>
+        </div>
+
+        <div class="replies-lists container-box mt10">
+            <div class="ui-header">
+                <span class="title">回复列表</span>
+            </div>
+            <div class="ui-content topics">
+                {% for item in replies %}
+                <div class="reply-item">
+                    <div class="main">
+                        <span class="title">
+                            回复了 {{ item.topic.author }} 创建的话题
+                            <a href="{% url 'topicview' item.topic.id %}">{{ item.topic.title }}</a>
+                        </span>
+                        <div class="content"><p>{{ item.content }}</p></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="ui-footer">
+                <a href="">›› 查看更多回复</a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}

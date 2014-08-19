@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+    {% block content %}
+    <div class="container-fluid container mt15">
+        <div class="row-fluid">
+        <div class="span9 left">
+            <div class="container-box">
+                <form class="form-horizontal" action='' method="POST">
+                    {% csrf_token %}
+                    <fieldset>
+                        <div id="legend">
+                            <legend class="">用户信息设置</legend>
+                        </div>
+                        {% if form.website.errors %}
+                            <ul class="errors alert alert-error">
+                                    {% for error in form.website.errors %}
+                                    <li>{{ error }}</li>
+                                    {% endfor %}
+                            </ul>
+                        {% endif %}
+                        <div class="control-group">
+                            
+                            <label class="control-label" for="username">头像</label>
+                            <div class="controls">
+                                <img src="{% if request.user.userprofile.avatar %}{{ STATIC_URL }}avatar/b_{{ request.user.userprofile.avatar }}.png{% else %}{{ STATIC_URL }}avatar/b_default.png{% endif %}" alt="" class="avatar" />
+                                <img src="{% if request.user.userprofile.avatar %}{{ STATIC_URL }}avatar/m_{{ request.user.userprofile.avatar }}.png{% else %}{{ STATIC_URL }}avatar/m_default.png{% endif %}" alt="" class="avatar" />
+                                <img src="{% if request.user.userprofile.avatar %}{{ STATIC_URL }}avatar/s_{{ request.user.userprofile.avatar }}.png{% else %}{{ STATIC_URL }}avatar/s_default.png{% endif %}" alt="" class="avatar" />
+                                <a href="{% url 'avatar' %}" class="btn btn-block set-avatar-btn">设置头像</a>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <!-- Username -->
+                            <label class="control-label" for="username">用户名</label>
+                            <div class="controls">
+                                <input type="text" id="username" name="username" placeholder="" class="input-xlarge" value="{{ request.user.username }}" readonly>
+                                <p class="help-block">用户名由字母开头，只能含有字母、数字或者下划线</p>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <!-- E-mail -->
+                            <label class="control-label" for="email">E-mail</label>
+                            <div class="controls">
+                                <input type="text" id="email" name="email" placeholder="" class="input-xlarge" value="{{ request.user.email }}" readonly>
+                                <p class="help-block">您的E-mail，便于登录和找回密码</p>
+                            </div>
+                        </div>
+           
+                        <div class="control-group">
+                            <!-- E-mail -->
+                            <label class="control-label" for="signature">个性签名</label>
+                            <div class="controls">
+                                {{ form.signature }}
+                                <p class="help-block">您的签名，将展示在您的个人资料页面</p>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <!-- Location -->
+                            <label class="control-label" for="location">城市</label>
+                            <div class="controls">
+                                {{ form.location }}
+                                <p class="help-block">您的城市，有助于后续您在社区的交友</p>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <!-- E-mail -->
+                            <label class="control-label" for="website">个人网站</label>
+                            <div class="controls">
+                                {{ form.website }}
+                                <p class="help-block">您的个人网站，让您的朋友了解您更多一点</p>
+                            </div>
+                        </div>
+            
+                        <div class="control-group">
+                            <!-- E-mail -->
+                            <label class="control-label" for="douban">豆瓣用户名：</label>
+                            <div class="controls">
+                                {{ form.douban }}
+                                <p class="help-block">您的豆瓣用户名，用以在您的个人页面展示您正在读的书。</p>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <!-- E-mail -->
+                            <label class="control-label" for="github">github：</label>
+                            <div class="controls">
+                                {{ form.github }}
+                                <p class="help-block">您的github用户名，用以在您的个人页面展示您的项目。</p>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <!-- E-mail -->
+                            <label class="control-label" for="self_intro">个人简介：</label>
+                            <div class="controls">
+                                {{ form.self_intro }}                                
+                                <p class="help-block">可以稍微详细的介绍自己。</p>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <!-- Button -->
+                            <div class="controls">
+                                <button class="btn btn-success">保存改动</button>
+                                <a href="{:U('Index/Settings/setpwd')}" class="ml10 btn">设置密码</a>
+                            </div>
+                        </div>
+                    </fieldset>
+                    
+                </form>
+            </div>
+
+
+        </div>
+
+        {% endblock %}

@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<include file="Index:header" />
+<body padding-top: 60px; background="__PUBLIC__/images/wallpaper.png";>
+    <include file="Index:navibar" />
+
+    <div class="container-fluid container mt15">
+        <div class="row-fluid">
+        <div class="span9 left">
+                <div class="topics container-box node-topics">
+                    <div class="ui-header">
+                        <a class="btn btn-small fr" type="button" href="{:U('Index/Topic/create',array('slug' => $node['slug']))}">发起新话题</a>
+                        <span class="bread-nav" style="font-size:14px;"> <a href="__APP__">MusicNote</a> › {$node.name}</span>
+                        <span class="label label-success" style="margin-left:4px"><a href="{:U('Index/Nodes/interest',array('slug' => $node['slug']))}" style="color:#FFFFFF">{$follow_text}</a></span>
+                    </div>
+
+                    <div class="ui-content">
+                        <foreach name='list' item='topic'>
+                            <div class="topic-item">
+                                <a href="">
+                                    <img src="__ROOT__/Uploads/avatar/b_<empty name="topic['author_avatar']">default.png<else />{$topic.author_avatar}</empty>" alt="" class="avatar" />
+                                </a>
+                                <div class="main">
+                                    <h3 class="title">
+                                        <a href="{:U('Index/Topic/index',array('topicid' => $topic['id']))}">{$topic.title}</a>
+
+                                    </h3>
+                                    <div class="meta">
+                                        <span class="node">
+                                            <a href="">{$topic.node_name}</a>
+                                        </span>
+                                        •
+                                        <span class="username">
+                                            <a href="">{$topic.author_username}</a>
+                                        </span>
+                                        • 
+                                    <if condition="!empty($topic['last_replied_time'])">
+                                        <span class="last-touched">{$topic.last_touched|timediff}</span>
+                                        •
+                                        <span class="last-reply-username">
+                                            最后回复来自
+                                            <a href=""> <strong>{$topic.last_replied_username}</strong>
+                                            </a>
+                                        </span>
+                                    <else />
+                                        <span class="last-touched">{$topic.last_touched|timediff}</span>
+                                    </if>
+                                    </div>
+                                </div>
+                                <if condition="!empty($topic['reply_count'])">
+                                    <div class="count">
+                                        <a href="">{$topic.reply_count}</a>
+                                    </div>
+                                    <else />
+                                    <div class="count">
+                                        <a href="">0</a>
+                                    </div>
+                                </if>
+                            </div>
+                        </foreach>
+                        <if condition="empty($list)">
+                        <div class="pl10 pr10">
+                            <div class="alert mt20">该小组下暂时还没有话题，发出您的讨论吧。</div>
+                        </div>
+                        </if>
+                    </div>   
+
+                    <div class="ui-footer">
+                        <div class="pagination">
+                        <ul>
+                            {$show}
+                        </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        <include file="Block:right" />   
+        </div>
+    </div>
+    <include file="Index:footer" />
+</body>
+</html>

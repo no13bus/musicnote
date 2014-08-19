@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<include file="Index:header" />
+<body padding-top: 60px; background="__PUBLIC__/images/wallpaper.png";>
+    <include file="Index:navibar" />
+
+    <div class="container-fluid container mt15">
+        <div class="row-fluid">
+        <div class="span9 left">
+                <div class="topics container-box user-topics">
+    <div class="ui-header">
+        <span class="bread-nav"><a href="__APP__">叁年壹班</a> › {$user_info.username} › 话题列表</span>
+    </div>
+
+    <div class="ui-content">
+        <foreach name="topics" item="topic">
+        <div class="topic-item">
+            <a href="{$topic.username}">
+                <img src="__ROOT__/Uploads/avatar/b_<empty name="user_info['avatar']">default.png<else />{$user_info.avatar}</empty>" alt="" class="avatar" />
+            </a>
+            <div class="main">
+                <h3 class="title">
+                    <a href="{:U('Index/Topic/index',array('topicid' => $topic['id']))}">{$topic.title}</a>
+                </h3>
+                <div class="meta">
+                    <span class="node">
+                        <a href="{:U('Index/Nodes/nodetopic',array('slug' => $topic['nodeslug']))}">{$topic.nodename}</a>
+                    </span>
+                    •
+                    <span class="username">
+                        <a href="#">{$topic.username}</a>
+                    </span>
+                    • 
+                      <if condition="!empty($topic['last_replied_time'])">
+                    <span class="last-touched">{$topic.last_touched|timediff}</span>
+                    •
+                    <span class="last-reply-username">
+                        最后回复来自
+                        <a href="/u/{{ topic.last_replied_username or topic.last_replied_uid }}"> <strong>{$topic.last_replied_username}</strong>
+                        </a>
+                    </span>
+                    <else />
+                    <span class="last-touched">{$topic.last_touched|timediff}</span>
+                    </if>
+                </div>
+            </div>
+            <if condition="!empty($topic['reply_count'])">
+            <div class="count">
+                <a href="">{$topic.reply_count|default="0"}</a>
+            </div>
+            <else />
+            <div class="count">
+                <a href="">0</a>
+            </div>
+            </if>
+        </div>
+        </foreach>
+        <if condition="empty($topics)">
+            <div class="pl10 pr10">
+                <div class="alert mt20">该用户暂时还没有回复过话题。</div>
+            </div>
+        </if>
+    </div>
+
+    <div class="ui-footer">
+        <div class="pagination">
+        <ul>
+            {$show}
+        </ul>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+    <include file="Block:right" />
+    </div>
+    <include file="Index:footer" />
+</body>
+</html>

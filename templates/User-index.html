@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<include file="Index:header" />
+<body padding-top: 60px; background="__PUBLIC__/images/wallpaper.png";>
+    <include file="Index:navibar" />
+    
+    <div class="container-fluid container mt15">
+        <div class="row-fluid">
+        <div class="span9 left">
+              <div class="member-lists container-box">
+                <div class="ui-header">
+                    <span class="title">社区活跃成员</span>
+                </div>
+                <div class="ui-content">
+                    <foreach name="active_members" item="member">
+                        <div class="member">
+                            <a href="{:U('Index/User/profile',array('username' => $member['username']))}">
+                                <img src="__ROOT__/Uploads/avatar/b_<empty name="member['avatar']">default.png<else />{$member.avatar}</empty>" alt="" class="avatar" />
+                            </a>
+                            <span class="username">
+                                <a href="">{$member.username}</a>
+                            </span>
+                        </div>
+                    </foreach>
+                    </div>
+                </div>
+
+                <div class="member-lists container-box mt10">
+                    <div class="ui-header">
+                        <span class="title">最新加入成员</span>
+                    </div>
+                    <div class="ui-content">
+                        <foreach name="lastest_members" item="member">
+                        <div class="member">
+                            <a href="">
+                                <img src="__ROOT__/Uploads/avatar/b_<empty name="member['avatar']">default.png<else />{$member.avatar}</empty>" alt="" class="avatar" />
+                            </a>
+                            <span class="username">
+                                <a href="">{$member.username}</a>
+                            </span>
+                        </div>
+                        </foreach>
+                    </div>
+                </div>
+        </div>
+
+        <include file="Block:right" />
+    </div>
+    <include file="Index:footer" />
+
+</body>
+</html>

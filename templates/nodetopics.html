@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+    {% block content %}
+    <div class="container-fluid container mt15">
+        <div class="row-fluid">
+        <div class="span9 left">
+                <div class="topics container-box node-topics">
+                    <div class="ui-header">
+                        <a class="btn btn-small fr" type="button" href="{% url 'createtopic' node.slug %}">发起新话题</a>
+                        <span class="bread-nav" style="font-size:14px;"> <a href="{% url 'index' %}">MusicNote</a> › {{ node.name }}</span>
+                        <span class="label label-success" style="margin-left:4px"><a href="{% url 'follownode' node.slug %}" style="color:#FFFFFF">{{ follow_text }}</a></span>
+                    </div>
+
+                    <div class="ui-content">
+                        {% for item in topics %}
+                            <div class="topic-item">
+                                <a href="{% url 'member_info' item.author.username %}">
+                                    <img src="{% if item.author.userprofile.avatar %}{{ STATIC_URL }}avatar/m_{{ item.author.userprofile.avatar }}.png{% else %}{{ STATIC_URL }}avatar/m_default.png{% endif %}" alt="" class="avatar" />
+                                </a>
+                                <div class="main">
+                                    <h3 class="title">
+                                        <a href="{% url 'topicview' item.id %}">{{ item.title }}</a>
+
+                                    </h3>
+                                    <div class="meta">
+                                        <span class="node">
+                                            <a href="">{{ item.node.name }}</a>
+                                        </span>
+                                        •
+                                        <span class="username">
+                                            <a href="{% url 'member_info' item.author.username %}">{{ item.author.username }}</a>
+                                        </span>
+                                        • 
+                                    {% if item.last_replied_by %}
+                                        <span class="last-touched">{{ item.last_touched }}</span>
+                                        •
+                                        <span class="last-reply-username">
+                                            最后回复来自
+                                            <a href="{% url 'member_info' item.author.username %}"> <strong>{{ item.last_replied_by.username }}</strong>
+                                            </a>
+                                        </span>
+                                    {% else %}
+                                        <span class="last-touched">{{ item.last_touched }}</span>                                    
+                                    {% endif %}
+                                    </div>
+                                </div>
+                                {% if item.reply_count %}
+                                    <div class="count">
+                                        <a href="{% url 'topicview' item.id %}#reply{{ item.reply_count }}">{{ item.reply_count }}</a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        {% if not topics %}
+                        <div class="pl10 pr10">
+                            <div class="alert mt20">该小组下暂时还没有话题，发出您的讨论吧。</div>
+                        </div>
+                        {% endif %}
+                    </div>   
+
+
+                    <div class="ui-footer">
+                        <div class="pagination" align="center">
+                            {% if topics.has_previous %}
+                                <a href="?page={{ topics.previous_page_number }}">previous</a>
+                            {% endif %}
+                            <span class="current">
+                                Page {{ topics.number }} of {{ topics.paginator.num_pages }}
+                            </span>
+                            {% if topics.has_next %}
+                                <a href="?page={{ topics.next_page_number }}">next</a>
+                            {% endif %}                        
+                        </div>
+                    </div>
+                </div>
+        {% endblock %}

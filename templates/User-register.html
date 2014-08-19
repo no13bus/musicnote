@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<include file="Index:header" />
+<body padding-top: 60px; background="__PUBLIC__/images/wallpaper.png";>
+    <include file="Index:navibar" />
+
+    <div class="container-fluid container mt15">
+        <div class="row-fluid">
+        <div class="span9 left">
+                <div class="container-box">
+                    <form class="form-horizontal" action="{:U('Index/User/register')}" method="POST">
+                        <fieldset>
+                            <div id="legend" class="mb50">
+                                <legend class="">注册</legend>
+                            </div>
+                            <if condition="!empty($errormsg)" >
+                                <ul class="errors alert alert-error">
+                                        <li>{$errormsg}</li>
+                                </ul>
+                            </if>
+                            <!-- {{ errors|dump_errors }} -->
+                            <div class="control-group">
+                                <!-- Username -->
+                                <label class="control-label" for="username">用户名</label>
+                                <div class="controls">
+                                    <input type="text" id="username" name="username" placeholder="" class="input-xlarge">
+                                    <p class="help-block">英文，数字，中文或'_'均可，4-16位字符</p>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <!-- E-mail -->
+                                <label class="control-label" for="email">E-mail</label>
+                                <div class="controls">
+                                    <input type="text" id="email" name="email" placeholder="" class="input-xlarge">
+                                    <p class="help-block">请输入您的E-mail，便于登录和找回密码</p>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <!-- Password-->
+                                <label class="control-label" for="password">密码</label>
+                                <div class="controls">
+                                    <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
+                                    <p class="help-block">密码不少于6个字符</p>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <!-- Button -->
+                                <div class="controls">
+                                    <button class="btn btn-success">注册</button>
+                                    <a href="{:U('Index/Login/index')}" class="ml10 mr10 btn">直接登录</a>
+                                    <a href="{:U('Index/Login/forgotpwd')}" class="btn">忘记密码了</a>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <!-- {{ xsrf_form_html() }} -->
+                    </form>
+                </div>
+            </div>
+
+            <include file="Block:right" />
+        </div>
+    </div>
+    <include file="Index:footer" />
+</body>
+</html>

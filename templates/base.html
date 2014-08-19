@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+{% include 'header.html' %}
+
+<body padding-top: 60px; background="{{ STATIC_URL }}images/wallpaper.png";>
+   {% include 'nav.html' %}
+   
+    {% block content %}
+        {% endblock %}
+
+        {% include 'right.html' %}
+    </div>
+    </div>
+    {% include 'footer.html' %}
+    
+
+</body>
+</html>
